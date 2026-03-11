@@ -21,13 +21,13 @@ struct Device {
     bool isCUDA() const { return type == DeviceType::CUDA; }
 
     std::string toString() const {
-	if (isCPU())
-	    return "CPU";
-	return "CUDA:" + std::to_string(index);
+        if (isCPU())
+            return "CPU";
+        return "CUDA:" + std::to_string(index);
     }
 
     bool operator==(const Device& other) const {
-	return type == other.type && index == other.index;
+        return type == other.type && index == other.index;
     }
 };
 

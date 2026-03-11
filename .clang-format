@@ -5,5 +5,5 @@ AllowShortIfStatementsOnASingleLine: Never
 DerivePointerAlignment: false
 PointerAlignment: Left
 ColumnLimit: 80
-UseTab: ForIndentation
+UseTab: Never
 IndentWidth: 4

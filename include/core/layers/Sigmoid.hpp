@@ -16,7 +16,7 @@ class Sigmoid : public AbstractBaseLayer {
     virtual const Tensor& getInput() const override { return mInput; }
     virtual const Tensor& getOutput() const override { return mOutput; }
     virtual const Tensor& getInputGradient() const override {
-	return mInputGradient;
+        return mInputGradient;
     }
 
    private:

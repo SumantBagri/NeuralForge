@@ -24,28 +24,28 @@ void MaxPool2d::forward(const Tensor& input) {
     mMaxIndices.resize(outHeight * outWidth);
 
     for (size_t i = 0; i < outHeight; i++) {
-	for (size_t j = 0; j < outWidth; j++) {
-	    float maxVal = std::numeric_limits<float>::lowest();
-	    size_t maxIdx = 0;
+        for (size_t j = 0; j < outWidth; j++) {
+            float maxVal = std::numeric_limits<float>::lowest();
+            size_t maxIdx = 0;
 
-	    // Find maximum in pool window
-	    for (size_t pi = 0; pi < mPoolSize; pi++) {
-		for (size_t pj = 0; pj < mPoolSize; pj++) {
-		    size_t row = i * mStride + pi;
-		    size_t col = j * mStride + pj;
-		    size_t inpuIdx = row * input.shape()[1] + col;
+            // Find maximum in pool window
+            for (size_t pi = 0; pi < mPoolSize; pi++) {
+                for (size_t pj = 0; pj < mPoolSize; pj++) {
+                    size_t row = i * mStride + pi;
+                    size_t col = j * mStride + pj;
+                    size_t inpuIdx = row * input.shape()[1] + col;
 
-		    if (input[inpuIdx] > maxVal) {
-			maxVal = input[inpuIdx];
-			maxIdx = inpuIdx;
-		    }
-		}
-	    }
+                    if (input[inpuIdx] > maxVal) {
+                        maxVal = input[inpuIdx];
+                        maxIdx = inpuIdx;
+                    }
+                }
+            }
 
-	    size_t outIdx = i * outWidth + j;
-	    mOutput[outIdx] = maxVal;
-	    mMaxIndices[outIdx] = maxIdx;
-	}
+            size_t outIdx = i * outWidth + j;
+            mOutput[outIdx] = maxVal;
+            mMaxIndices[outIdx] = maxIdx;
+        }
     }
 }
 
@@ -55,7 +55,7 @@ void MaxPool2d::backward(const Tensor& output_gradient) {
 
     // Propagate gradient only to maximum elements
     for (size_t i = 0; i < mOutput.numel(); i++) {
-	mInputGradient[mMaxIndices[i]] += output_gradient[i];
+        mInputGradient[mMaxIndices[i]] += output_gradient[i];
     }
 }
 

@@ -36,13 +36,13 @@ class HostStorage : public Storage {
    public:
     HostStorage(size_t numel, DataType dtype)
         : mNumel(numel), mDtype(dtype), mDevice(DeviceType::CPU, 0) {
-	allocateAligned();
+        allocateAligned();
     }
 
     ~HostStorage() {
-	if (mData) {
-	    free(mData);
-	}
+        if (mData) {
+            free(mData);
+        }
     }
 
     void* data() override { return mData; }
@@ -54,35 +54,35 @@ class HostStorage : public Storage {
     size_t sizeBytes() const override { return mNumel * getSizeOf(mDtype); }
 
     void copyFrom(const Storage& other) override {
-	if (other.numel() != mNumel) {
-	    throw std::invalid_argument("Storage size mismatch in copyFrom: " +
-	                                std::to_string(other.numel()) + " vs " +
-	                                std::to_string(mNumel));
-	}
-	if (other.dtype() != mDtype) {
-	    throw std::invalid_argument("DataType mismatch in copyFrom");
-	}
-	if (other.device().isCPU()) {
-	    std::memcpy(mData, other.data(), sizeBytes());
-	} else {
-	    throw std::invalid_argument(
-	        "copyFrom: GPU to CPU copy not implemented yet");
-	}
+        if (other.numel() != mNumel) {
+            throw std::invalid_argument("Storage size mismatch in copyFrom: " +
+                                        std::to_string(other.numel()) + " vs " +
+                                        std::to_string(mNumel));
+        }
+        if (other.dtype() != mDtype) {
+            throw std::invalid_argument("DataType mismatch in copyFrom");
+        }
+        if (other.device().isCPU()) {
+            std::memcpy(mData, other.data(), sizeBytes());
+        } else {
+            throw std::invalid_argument(
+                "copyFrom: GPU to CPU copy not implemented yet");
+        }
     }
 
     void zero() override { std::memset(mData, 0, sizeBytes()); }
 
    private:
     void allocateAligned() {
-	// Align to 256 bytes for GPU memory coalescing efficiency
-	const size_t alignment = 256;
-	size_t bytes = sizeBytes();
+        // Align to 256 bytes for GPU memory coalescing efficiency
+        const size_t alignment = 256;
+        size_t bytes = sizeBytes();
 
-	// Use posix_memalign for cache-line and GPU alignment
-	int ret = posix_memalign(&mData, alignment, bytes);
-	if (ret != 0) {
-	    throw std::bad_alloc();
-	}
+        // Use posix_memalign for cache-line and GPU alignment
+        int ret = posix_memalign(&mData, alignment, bytes);
+        if (ret != 0) {
+            throw std::bad_alloc();
+        }
     }
 
     void* mData = nullptr;
