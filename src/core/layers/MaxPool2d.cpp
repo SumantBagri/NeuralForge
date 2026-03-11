@@ -13,13 +13,13 @@ MaxPool2d::MaxPool2d(size_t poolSize, size_t stride, std::string name)
     mName = name;
 }
 
-void MaxPool2d::forward(const Tensor& input) {
+void MaxPool2d::forward(const FloatTensor& input) {
     mInput = input;
 
     // output dims
     size_t outHeight = (input.shape()[0] - mPoolSize) / mStride + 1;
     size_t outWidth = (input.shape()[1] - mPoolSize) / mStride + 1;
-    mOutput = Tensor(outHeight, outWidth);
+    mOutput = FloatTensor(outHeight, outWidth);
 
     mMaxIndices.resize(outHeight * outWidth);
 
@@ -49,8 +49,8 @@ void MaxPool2d::forward(const Tensor& input) {
     }
 }
 
-void MaxPool2d::backward(const Tensor& output_gradient) {
-    mInputGradient = Tensor(mInput.shape());
+void MaxPool2d::backward(const FloatTensor& output_gradient) {
+    mInputGradient = FloatTensor(mInput.shape());
     mInputGradient.zero();
 
     // Propagate gradient only to maximum elements

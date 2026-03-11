@@ -1,8 +1,9 @@
 #ifndef MAXPOOL2D_H
 #define MAXPOOL2D_H
 
-#include <core/layers/AbstractBaseLayer.hpp>
 #include <vector>
+
+#include "core/layers/AbstractBaseLayer.hpp"
 
 namespace nf {
 
@@ -12,19 +13,21 @@ class MaxPool2d : public AbstractBaseLayer {
               std::string name = "MaxPool2d");
     ~MaxPool2d() override = default;
 
-    void forward(const Tensor& input) override;
-    void backward(const Tensor& output_gradient) override;
+    void forward(const FloatTensor& input) override;
+    void backward(const FloatTensor& output_gradient) override;
 
-    const Tensor& getInput() const override { return mInput; }
-    const Tensor& getOutput() const override { return mOutput; }
-    const Tensor& getInputGradient() const override { return mInputGradient; }
+    const FloatTensor& getInput() const override { return mInput; }
+    const FloatTensor& getOutput() const override { return mOutput; }
+    const FloatTensor& getInputGradient() const override {
+        return mInputGradient;
+    }
 
    private:
     size_t mPoolSize;
     size_t mStride;
-    Tensor mInput;
-    Tensor mOutput;
-    Tensor mInputGradient;
+    FloatTensor mInput;
+    FloatTensor mOutput;
+    FloatTensor mInputGradient;
     std::vector<size_t> mMaxIndices;
 };
 

@@ -11,23 +11,38 @@ namespace nf {
 enum class DataType {
     FLOAT32,  // 32-bit floating point
     FLOAT64,  // 64-bit floating point
-    FLOAT16,  // 16-bit floating point (half precision)
-    INT32,    // 32-bit signed integer
     INT8,     // 8-bit signed integer (quantization)
 };
+
+template <DataType D>
+struct DataTypeTraits;
+
+template <>
+struct DataTypeTraits<DataType::FLOAT32> {
+    using type = float;
+};
+
+template <>
+struct DataTypeTraits<DataType::FLOAT64> {
+    using type = double;
+};
+
+template <>
+struct DataTypeTraits<DataType::INT8> {
+    using type = int8_t;
+};
+
+template <DataType D>
+using dtype_t = typename DataTypeTraits<D>::type;
 
 inline size_t getSizeOf(DataType dtype) {
     switch (dtype) {
         case DataType::FLOAT32:
-            return sizeof(float);
+            return sizeof(dtype_t<DataType::FLOAT32>);
         case DataType::FLOAT64:
-            return sizeof(double);
-        case DataType::FLOAT16:
-            return 2;  // 16 bits = 2 bytes
-        case DataType::INT32:
-            return sizeof(int32_t);
+            return sizeof(dtype_t<DataType::FLOAT64>);
         case DataType::INT8:
-            return sizeof(int8_t);
+            return sizeof(dtype_t<DataType::INT8>);
         default:
             throw std::invalid_argument("Unknown DataType");
     }
@@ -39,10 +54,6 @@ inline std::string dataTypeToString(DataType dtype) {
             return "float32";
         case DataType::FLOAT64:
             return "float64";
-        case DataType::FLOAT16:
-            return "float16";
-        case DataType::INT32:
-            return "int32";
         case DataType::INT8:
             return "int8";
         default:

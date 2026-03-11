@@ -2,14 +2,15 @@
 #define MATMUL_H
 
 #include <stdexcept>
-#include <structures/Tensor.hpp>
+
+#include "structures/Tensor.hpp"
 
 namespace nf {
 
 // CPU matrix multiplication utility function for 2D tensors
 // Performs C = A @ B (row-major order)
 // A: (m, k), B: (k, n) -> Result: (m, n)
-inline Tensor matmul(const Tensor& A, const Tensor& B) {
+inline FloatTensor matmul(const FloatTensor& A, const FloatTensor& B) {
     if (A.ndim() != 2 || B.ndim() != 2) {
         throw std::invalid_argument("matmul: both operands must be 2D tensors");
     }
@@ -22,15 +23,11 @@ inline Tensor matmul(const Tensor& A, const Tensor& B) {
                                     std::to_string(B.size(1)) + ")]");
     }
 
-    if (A.dtype() != B.dtype()) {
-        throw std::invalid_argument("matmul: operands must have same dtype");
-    }
-
     size_t m = A.size(0);
     size_t k = A.size(1);
     size_t n = B.size(1);
 
-    Tensor C(m, n, A.dtype(), A.device());
+    FloatTensor C(m, n, A.device());
 
     const float* a_data = A.dataAs<float>();
     const float* b_data = B.dataAs<float>();

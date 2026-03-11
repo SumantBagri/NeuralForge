@@ -9,10 +9,10 @@ Sigmoid::Sigmoid(std::string name)
     mName = name;
 }
 
-void Sigmoid::forward(const Tensor& input) {
+void Sigmoid::forward(const FloatTensor& input) {
     mInput = input;
     // Output has same shape as input
-    mOutput = Tensor(input.shape(), input.dtype(), input.device());
+    mOutput = FloatTensor(input.shape(), input.device());
 
     // mOutput = 1 / 1 + e^(-input)
     for (size_t i = 0; i < mInput.numel(); i++) {
@@ -20,8 +20,8 @@ void Sigmoid::forward(const Tensor& input) {
     }
 }
 
-void Sigmoid::backward(const Tensor& output_gradient) {
-    mInputGradient = Tensor(mInput.shape(), mInput.dtype(), mInput.device());
+void Sigmoid::backward(const FloatTensor& output_gradient) {
+    mInputGradient = FloatTensor(mInput.shape(), mInput.device());
 
     // Sigmoid derivative: f'(x) = f(x) * (1 - f(x))
     // Chain rule: dL/dx = dL/dy * dy/dx

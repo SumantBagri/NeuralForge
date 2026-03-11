@@ -6,14 +6,12 @@
 namespace nf {
 
 Conv2d::Conv2d(size_t inChannels, size_t outChannels, size_t kernelSize,
-               size_t stride, size_t padding, size_t filters, bool bias,
-               std::string name)
+               size_t stride, size_t padding, bool bias, std::string name)
     : mInChannels(inChannels),
       mOutChannels(outChannels),
       mKernelSize(kernelSize),
       mStride(stride),
       mPadding(padding),
-      mFilters(filters),
       mUseBias(bias),
       mInput(Shape(1)),
       mInputGradient(Shape(1)),
@@ -37,7 +35,7 @@ Conv2d::Conv2d(size_t inChannels, size_t outChannels, size_t kernelSize,
     size_t kernelElementCount =
         outChannels * inChannels * kernelSize * kernelSize;
     // Kernel shape: (outChannels, inChannels * kernelSize * kernelSize)
-    mKernel = Tensor(outChannels, inChannels * kernelSize * kernelSize);
+    mKernel = FloatTensor(outChannels, inChannels * kernelSize * kernelSize);
 
     std::normal_distribution<float> kernelDist(0.0f, kernelStdDev);
     for (size_t i = 0; i < kernelElementCount; i++) {
@@ -47,7 +45,7 @@ Conv2d::Conv2d(size_t inChannels, size_t outChannels, size_t kernelSize,
     // if bias is used, allocate and initialize
     if (mUseBias) {
         float biasStdDev = std::sqrt(2.0f / fanIn) * 0.1f;
-        mBias = Tensor(outChannels, 1);
+        mBias = FloatTensor(outChannels, 1);
         std::normal_distribution<float> biasDist(0.0f, biasStdDev);
         for (size_t i = 0; i < outChannels; i++) {
             mBias[i] = biasDist(gen);
@@ -63,10 +61,10 @@ Shape Conv2d::getOutputDimsFromInput(const Shape& input) {
     return Shape(outputHeight, outputWidth);
 }
 
-Tensor Conv2d::getZeroPaddedInput() {
+FloatTensor Conv2d::getZeroPaddedInput() {
     Shape paddedDims = {mInput.shape()[0] + 2 * mPadding,
                         mInput.shape()[1] + 2 * mPadding};
-    Tensor paddedInput(paddedDims);
+    FloatTensor paddedInput(paddedDims);
     paddedInput.zero();
 
     // copy the input to the center of the padded input
@@ -81,11 +79,12 @@ Tensor Conv2d::getZeroPaddedInput() {
     return paddedInput;
 }
 
-Tensor Conv2d::convolve(const Tensor& input, const Tensor& kernel) {
+FloatTensor Conv2d::convolve(const FloatTensor& input,
+                             const FloatTensor& kernel) {
     Shape outputDims = getOutputDimsFromInput(input.shape());
 
     // initialize output tensor
-    Tensor result(outputDims);
+    FloatTensor result(outputDims);
 
     // loop over each output cell
     for (size_t i = 0; i < outputDims[0]; i++) {
@@ -113,12 +112,12 @@ Tensor Conv2d::convolve(const Tensor& input, const Tensor& kernel) {
     return result;
 }
 
-void Conv2d::forward(const Tensor& input) {
+void Conv2d::forward(const FloatTensor& input) {
     mInput = input;
 
     Shape outputDims = getOutputDimsFromInput(input.shape());
     // Output shape: (mOutChannels, outputHeight * outputWidth)
-    mOutput = Tensor(mOutChannels, outputDims[0] * outputDims[1]);
+    mOutput = FloatTensor(mOutChannels, outputDims[0] * outputDims[1]);
     mOutput.zero();
 
     for (size_t outCh = 0; outCh < mOutChannels; outCh++) {
@@ -131,13 +130,13 @@ void Conv2d::forward(const Tensor& input) {
             // Create a view of the kernel for this channel
             // Note: In a production framework, this would be a lightweight view
             // without copying
-            Tensor channelKernel(mKernelSize, mKernelSize);
+            FloatTensor channelKernel(mKernelSize, mKernelSize);
             for (size_t k = 0; k < mKernelSize * mKernelSize; k++) {
                 channelKernel[k] = mKernel[kernelOffset + k];
             }
 
             // convolve the input with the kernel
-            Tensor result = convolve(input, channelKernel);
+            FloatTensor result = convolve(input, channelKernel);
             for (size_t i = 0; i < outputDims[0] * outputDims[1]; i++) {
                 mOutput[outCh * outputDims[0] * outputDims[1] + i] += result[i];
             }
@@ -153,11 +152,11 @@ void Conv2d::forward(const Tensor& input) {
     }
 }
 
-void Conv2d::backward(const Tensor& output_gradient) {
-    mInputGradient = Tensor(mInput.shape());
+void Conv2d::backward(const FloatTensor& output_gradient) {
+    mInputGradient = FloatTensor(mInput.shape());
     mInputGradient.zero();
 
-    mKernelGradient = Tensor(mKernel.shape());
+    mKernelGradient = FloatTensor(mKernel.shape());
     mKernelGradient.zero();
 
     for (size_t outCh = 0; outCh < mOutChannels; outCh++) {
@@ -167,18 +166,20 @@ void Conv2d::backward(const Tensor& output_gradient) {
                 inCh * mKernelSize * mKernelSize;
 
             // compute input gradients
-            Tensor channelKernel(mKernelSize, mKernelSize);
+            FloatTensor channelKernel(mKernelSize, mKernelSize);
             for (size_t k = 0; k < mKernelSize * mKernelSize; k++) {
                 channelKernel[k] = mKernel[kernelOffset + k];
             }
 
-            Tensor channelGradient = convolve(output_gradient, channelKernel);
+            FloatTensor channelGradient =
+                convolve(output_gradient, channelKernel);
             for (size_t i = 0; i < mInput.numel(); i++) {
                 mInputGradient[i] += channelGradient[i];
             }
 
-            Tensor inputPadded = getZeroPaddedInput();
-            Tensor inputPaddedGradient = convolve(inputPadded, output_gradient);
+            FloatTensor inputPadded = getZeroPaddedInput();
+            FloatTensor inputPaddedGradient =
+                convolve(inputPadded, output_gradient);
         }
     }
 }

@@ -3,8 +3,9 @@
 
 #include <cstring>
 #include <stdexcept>
-#include <structures/DataType.hpp>
-#include <structures/Device.hpp>
+
+#include "structures/DataType.hpp"
+#include "structures/Device.hpp"
 
 namespace nf {
 

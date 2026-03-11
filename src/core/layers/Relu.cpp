@@ -7,10 +7,10 @@ Relu::Relu(std::string name)
     mName = name;
 }
 
-void Relu::forward(const Tensor& input) {
+void Relu::forward(const FloatTensor& input) {
     mInput = input;
     // Output has same shape as input
-    mOutput = Tensor(input.shape(), input.dtype(), input.device());
+    mOutput = FloatTensor(input.shape(), input.device());
 
     // mOutput = mInput > 0 ? mInput : 0
     for (size_t i = 0; i < mInput.numel(); i++) {
@@ -18,8 +18,8 @@ void Relu::forward(const Tensor& input) {
     }
 }
 
-void Relu::backward(const Tensor& output_gradient) {
-    mInputGradient = Tensor(mInput.shape(), mInput.dtype(), mInput.device());
+void Relu::backward(const FloatTensor& output_gradient) {
+    mInputGradient = FloatTensor(mInput.shape(), mInput.device());
 
     // ReLU derivative: f'(x) = 1 if x > 0, else 0
     // Chain rule: dL/dx = dL/dy * dy/dx
