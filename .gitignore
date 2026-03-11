@@ -1,0 +1,44 @@
+# CMake
+build/
+cmake-build-debug/
+cmake-build-release/
+CMakeFiles/
+cmake_install.cmake
+CMakeCache.txt
+*.cmake
+
+# Build artifacts
+*.o
+*.a
+*.so
+*.dll
+*.dylib
+*.exe
+
+# IDE
+.vscode/
+.idea/
+.cache/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Dependencies
+lib/
+include/third_party/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+*.log
