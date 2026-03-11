@@ -1,22 +1,25 @@
-#include "core/layers/MaxPool.h"
+#include "core/layers/MaxPool2d.h"
 
-#include <algorithm>
 #include <limits>
 
 namespace nf {
 
-MaxPool::MaxPool(size_t poolSize, size_t stride, std::string name)
-    : mPoolSize(poolSize), mStride(stride) {
+MaxPool2d::MaxPool2d(size_t poolSize, size_t stride, std::string name)
+    : mPoolSize(poolSize),
+      mStride(stride),
+      mInput(Shape(1)),
+      mOutput(Shape(1)),
+      mInputGradient(Shape(1)) {
   mName = name;
 }
 
-void MaxPool::forward(const Matrix& input) {
+void MaxPool2d::forward(const Tensor& input) {
   mInput = input;
 
   // output dims
-  size_t outHeight = (input.shape.x - mPoolSize) / mStride + 1;
-  size_t outWidth = (input.shape.y - mPoolSize) / mStride + 1;
-  mOutput.allocateMemoryIfNotAllocated({outHeight, outWidth});
+  size_t outHeight = (input.shape()[0] - mPoolSize) / mStride + 1;
+  size_t outWidth = (input.shape()[1] - mPoolSize) / mStride + 1;
+  mOutput = Tensor(outHeight, outWidth);
 
   mMaxIndices.resize(outHeight * outWidth);
 
@@ -30,7 +33,7 @@ void MaxPool::forward(const Matrix& input) {
 	for (size_t pj = 0; pj < mPoolSize; pj++) {
 	  size_t row = i * mStride + pi;
 	  size_t col = j * mStride + pj;
-	  size_t inpuIdx = row * input.shape.y + col;
+	  size_t inpuIdx = row * input.shape()[1] + col;
 
 	  if (input[inpuIdx] > maxVal) {
 	    maxVal = input[inpuIdx];
@@ -46,12 +49,12 @@ void MaxPool::forward(const Matrix& input) {
   }
 }
 
-void MaxPool::backward(const Matrix& output_gradient) {
-  mInputGradient.allocateMemoryIfNotAllocated(mInput.shape);
-  std::fill(mInputGradient.begin(), mInputGradient.end(), 0.0f);
+void MaxPool2d::backward(const Tensor& output_gradient) {
+  mInputGradient = Tensor(mInput.shape());
+  mInputGradient.zero();
 
   // Propagate gradient only to maximum elements
-  for (size_t i = 0; i < mOutput.shape.x * mOutput.shape.y; i++) {
+  for (size_t i = 0; i < mOutput.numel(); i++) {
     mInputGradient[mMaxIndices[i]] += output_gradient[i];
   }
 }

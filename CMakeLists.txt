@@ -15,9 +15,9 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 
 # Source files
 set(SOURCES
-    src/core/layers/Convolution.cpp
+    src/core/layers/Conv2d.cpp
     src/core/layers/FullyConnected.cpp
-    src/core/layers/MaxPool.cpp
+    src/core/layers/MaxPool2d.cpp
     src/core/layers/Relu.cpp
     src/core/layers/Sigmoid.cpp
     src/core/loss/CrossEntropyLoss.cpp

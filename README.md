@@ -20,7 +20,7 @@ NeuralForge provides a clean API for building and training neural networks in C+
 
 ## Features
 
-**Layers**: Convolution 2D, Fully Connected, Max Pooling, ReLU, Sigmoid  
+**Layers**: Conv2d, Fully Connected, MaxPool2d, ReLU, Sigmoid  
 **Training**: Cross-Entropy Loss, SGD Optimizer, Forward/Backward Propagation  
 **Utilities**: Matrix operations, Data loading, Shape inference
 
