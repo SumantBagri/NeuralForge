@@ -6,3 +6,4 @@ DerivePointerAlignment: false
 PointerAlignment: Left
 ColumnLimit: 80
 UseTab: ForIndentation
+IndentWidth: 4

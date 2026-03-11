@@ -6,23 +6,23 @@
 namespace nf {
 
 class Sigmoid : public AbstractBaseLayer {
- public:
-  explicit Sigmoid(std::string name = "Sigmoid");
-  ~Sigmoid() override = default;
+   public:
+    explicit Sigmoid(std::string name = "Sigmoid");
+    ~Sigmoid() override = default;
 
-  virtual void forward(const Tensor& input) override;
-  virtual void backward(const Tensor& output_gradient) override;
+    virtual void forward(const Tensor& input) override;
+    virtual void backward(const Tensor& output_gradient) override;
 
-  virtual const Tensor& getInput() const override { return mInput; }
-  virtual const Tensor& getOutput() const override { return mOutput; }
-  virtual const Tensor& getInputGradient() const override {
-    return mInputGradient;
-  }
+    virtual const Tensor& getInput() const override { return mInput; }
+    virtual const Tensor& getOutput() const override { return mOutput; }
+    virtual const Tensor& getInputGradient() const override {
+	return mInputGradient;
+    }
 
- private:
-  Tensor mInput;
-  Tensor mOutput;
-  Tensor mInputGradient;
+   private:
+    Tensor mInput;
+    Tensor mOutput;
+    Tensor mInputGradient;
 };
 
 }  // namespace nf
