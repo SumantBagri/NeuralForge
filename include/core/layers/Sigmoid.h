@@ -10,19 +10,19 @@ class Sigmoid : public AbstractBaseLayer {
   explicit Sigmoid(std::string name = "Sigmoid");
   ~Sigmoid() override = default;
 
-  virtual void forward(const Matrix& input) override;
-  virtual void backward(const Matrix& output_gradient) override;
+  virtual void forward(const Tensor& input) override;
+  virtual void backward(const Tensor& output_gradient) override;
 
-  virtual const Matrix& getInput() const override { return mInput; }
-  virtual const Matrix& getOutput() const override { return mOutput; }
-  virtual const Matrix& getInputGradient() const override {
+  virtual const Tensor& getInput() const override { return mInput; }
+  virtual const Tensor& getOutput() const override { return mOutput; }
+  virtual const Tensor& getInputGradient() const override {
     return mInputGradient;
   }
 
  private:
-  Matrix mInput;
-  Matrix mOutput;
-  Matrix mInputGradient;
+  Tensor mInput;
+  Tensor mOutput;
+  Tensor mInputGradient;
 };
 
 }  // namespace nf

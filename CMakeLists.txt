@@ -22,7 +22,6 @@ set(SOURCES
     src/core/layers/Sigmoid.cpp
     src/core/loss/CrossEntropyLoss.cpp
     src/core/optimizers/SGD.cpp
-    src/math/Matrix.cpp
     src/util/DataLoader.cpp
 )
 
