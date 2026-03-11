@@ -1,4 +1,4 @@
-#include "core/layers/MaxPool2d.h"
+#include "core/layers/MaxPool2d.hpp"
 
 #include <limits>
 

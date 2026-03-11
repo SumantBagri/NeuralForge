@@ -14,7 +14,7 @@ build:
 
 format:
 	@echo "Formatting C++ files..."
-	@for file in $$(find include src -name "*.h" -o -name "*.cpp"); do \
+	@for file in $$(find include src -name "*.hpp" -o -name "*.cpp"); do \
 		echo "  Formatting $$file"; \
 		clang-format -i "$$file"; \
 	done

@@ -1,9 +1,8 @@
 #ifndef MATMUL_H
 #define MATMUL_H
 
-#include <structures/Tensor.h>
-
 #include <stdexcept>
+#include <structures/Tensor.hpp>
 
 namespace nf {
 

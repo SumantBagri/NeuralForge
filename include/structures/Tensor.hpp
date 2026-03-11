@@ -1,14 +1,13 @@
 #ifndef TENSOR_H
 #define TENSOR_H
 
-#include <structures/DataType.h>
-#include <structures/Device.h>
-#include <structures/Shape.h>
-#include <structures/Storage.h>
-
 #include <cstring>
 #include <memory>
 #include <stdexcept>
+#include <structures/DataType.hpp>
+#include <structures/Device.hpp>
+#include <structures/Shape.hpp>
+#include <structures/Storage.hpp>
 #include <vector>
 
 namespace nf {

@@ -1,14 +1,14 @@
-#ifndef RELU_H
-#define RELU_H
+#ifndef SIGMOID_H
+#define SIGMOID_H
 
-#include <core/layers/AbstractBaseLayer.h>
+#include <core/layers/AbstractBaseLayer.hpp>
 
 namespace nf {
 
-class Relu : public AbstractBaseLayer {
+class Sigmoid : public AbstractBaseLayer {
    public:
-    explicit Relu(std::string name = "ReLU");
-    ~Relu() override = default;
+    explicit Sigmoid(std::string name = "Sigmoid");
+    ~Sigmoid() override = default;
 
     virtual void forward(const Tensor& input) override;
     virtual void backward(const Tensor& output_gradient) override;
@@ -27,4 +27,4 @@ class Relu : public AbstractBaseLayer {
 
 }  // namespace nf
 
-#endif  // RELU_H
+#endif  // SIGMOID_H

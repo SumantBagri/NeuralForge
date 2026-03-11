@@ -1,11 +1,10 @@
 #ifndef STORAGE_H
 #define STORAGE_H
 
-#include <structures/DataType.h>
-#include <structures/Device.h>
-
 #include <cstring>
 #include <stdexcept>
+#include <structures/DataType.hpp>
+#include <structures/Device.hpp>
 
 namespace nf {
 

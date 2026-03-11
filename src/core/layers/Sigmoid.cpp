@@ -1,4 +1,4 @@
-#include "core/layers/Sigmoid.h"
+#include "core/layers/Sigmoid.hpp"
 
 #include <cmath>
 

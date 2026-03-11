@@ -1,9 +1,8 @@
 #ifndef ABSTRACT_BASE_LAYER_H
 #define ABSTRACT_BASE_LAYER_H
 
-#include <structures/Tensor.h>
-
 #include <string>
+#include <structures/Tensor.hpp>
 
 namespace nf {
 

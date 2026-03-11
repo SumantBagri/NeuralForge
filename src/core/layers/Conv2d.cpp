@@ -1,4 +1,4 @@
-#include "core/layers/Conv2d.h"
+#include "core/layers/Conv2d.hpp"
 
 #include <cmath>
 #include <random>

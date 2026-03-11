@@ -1,7 +1,7 @@
 #ifndef CONV2D_H
 #define CONV2D_H
 
-#include <core/layers/AbstractBaseLayer.h>
+#include <core/layers/AbstractBaseLayer.hpp>
 
 namespace nf {
 

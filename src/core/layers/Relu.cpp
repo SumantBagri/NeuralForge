@@ -1,4 +1,4 @@
-#include "core/layers/Relu.h"
+#include "core/layers/Relu.hpp"
 
 namespace nf {
 

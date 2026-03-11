@@ -1,8 +1,7 @@
 #ifndef MAXPOOL2D_H
 #define MAXPOOL2D_H
 
-#include <core/layers/AbstractBaseLayer.h>
-
+#include <core/layers/AbstractBaseLayer.hpp>
 #include <vector>
 
 namespace nf {
