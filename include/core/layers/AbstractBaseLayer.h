@@ -2,6 +2,7 @@
 #define ABSTRACT_BASE_LAYER_H
 
 #include <math/Matrix.h>
+
 #include <string>
 
 namespace cnncpp {
@@ -26,4 +27,4 @@ class AbstractBaseLayer {
 
 }  // namespace cnncpp
 
-#endif  //ABSTRACT_BASE_LAYER_H
+#endif  // ABSTRACT_BASE_LAYER_H

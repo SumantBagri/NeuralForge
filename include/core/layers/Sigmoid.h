@@ -5,10 +5,10 @@
 
 namespace cnncpp {
 
-class Sigmoid : AbstractBaseLayer {
+class Sigmoid : public AbstractBaseLayer {
  public:
-  Sigmoid(std::string name);
-  virtual ~Sigmoid() override = default;
+  explicit Sigmoid(std::string name = "Sigmoid");
+  ~Sigmoid() override = default;
 
   virtual void forward(const Matrix& input) override;
   virtual void backward(const Matrix& output_gradient) override;

@@ -5,10 +5,10 @@
 
 namespace cnncpp {
 
-class Relu : AbstractBaseLayer {
+class Relu : public AbstractBaseLayer {
  public:
-  Relu(std::string name);
-  virtual ~Relu() override = default;
+  explicit Relu(std::string name = "ReLU");
+  ~Relu() override = default;
 
   virtual void forward(const Matrix& input) override;
   virtual void backward(const Matrix& output_gradient) override;

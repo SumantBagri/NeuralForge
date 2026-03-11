@@ -1,10 +1,8 @@
-#include "Relu.h"
+#include "core/layers/Relu.h"
 
 namespace cnncpp {
 
-Relu::Relu(std::string name) {
-  mName = name;
-}
+Relu::Relu(std::string name) { mName = name; }
 
 void Relu::forward(const Matrix& input) {
   mInput = input;
@@ -19,7 +17,8 @@ void Relu::forward(const Matrix& input) {
 void Relu::backward(const Matrix& output_gradient) {
   mInputGradient.allocateMemoryIfNotAllocated(mInput.shape);
 
-  // mInputGradient = mOutput > 0 ? 1 : 0
+  // ReLU derivative: f'(x) = 1 if x > 0, else 0
+  // Chain rule: dL/dx = dL/dy * dy/dx
   for (size_t i = 0; i < mInput.shape.x * mInput.shape.y; i++) {
     mInputGradient[i] = mInput[i] > 0 ? output_gradient[i] : 0.0f;
   }

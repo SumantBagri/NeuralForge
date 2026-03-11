@@ -1,4 +1,5 @@
-#include "Matrix.h"
+#include "math/Matrix.h"
+
 #include <sstream>
 #include <stdexcept>
 
@@ -9,12 +10,20 @@ Matrix::Matrix(size_t x_dim, size_t y_dim)
 
 Matrix::Matrix(Shape shape) : Matrix(shape.x, shape.y) {}
 
-float& Matrix::operator[](const int index) {
-  return mDataHost.get()[index];
-}
+float& Matrix::operator[](const int index) { return mDataHost.get()[index]; }
 
 const float& Matrix::operator[](const int index) const {
   return mDataHost.get()[index];
+}
+
+float* Matrix::begin() { return mDataHost.get(); }
+
+const float* Matrix::begin() const { return mDataHost.get(); }
+
+float* Matrix::end() { return mDataHost.get() + (shape.x * shape.y); }
+
+const float* Matrix::end() const {
+  return mDataHost.get() + (shape.x * shape.y);
 }
 
 Matrix Matrix::operator*(const Matrix& rhs) const {
@@ -33,7 +42,7 @@ Matrix Matrix::operator*(const Matrix& rhs) const {
     for (size_t col = 0; col < rhs.shape.y; col++) {  // result -> col
       float sum{0.0f};
       for (size_t i = 0; i < this->shape.y; i++) {
-        sum += (*this)[row * this->shape.y + i] * rhs[i * rhs.shape.y + col];
+	sum += (*this)[row * this->shape.y + i] * rhs[i * rhs.shape.y + col];
       }
       result[row * rhs.shape.y + col] = sum;
     }
@@ -50,9 +59,7 @@ void Matrix::allocateHostMemory() {
   }
 }
 
-void Matrix::allocateMemory() {
-  allocateHostMemory();
-}
+void Matrix::allocateMemory() { allocateHostMemory(); }
 
 void Matrix::allocateMemoryIfNotAllocated(Shape shape) {
   if (!mIsHostAllocated) {
