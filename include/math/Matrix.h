@@ -6,7 +6,7 @@
 #include <memory>
 #include <vector>
 
-namespace cnncpp {
+namespace nf {
 
 class Matrix {
  public:
@@ -36,6 +36,6 @@ class Matrix {
   void allocateHostMemory();
 };
 
-}  // namespace cnncpp
+}  // namespace nf
 
 #endif  // MATRIX_H

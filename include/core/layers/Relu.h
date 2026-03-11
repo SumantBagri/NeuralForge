@@ -3,7 +3,7 @@
 
 #include <core/layers/AbstractBaseLayer.h>
 
-namespace cnncpp {
+namespace nf {
 
 class Relu : public AbstractBaseLayer {
  public:
@@ -25,6 +25,6 @@ class Relu : public AbstractBaseLayer {
   Matrix mInputGradient;
 };
 
-}  // namespace cnncpp
+}  // namespace nf
 
 #endif  // RELU_H

@@ -3,7 +3,7 @@
 
 #include <core/layers/AbstractBaseLayer.h>
 
-namespace cnncpp {
+namespace nf {
 
 class Sigmoid : public AbstractBaseLayer {
  public:
@@ -25,6 +25,6 @@ class Sigmoid : public AbstractBaseLayer {
   Matrix mInputGradient;
 };
 
-}  // namespace cnncpp
+}  // namespace nf
 
 #endif  // SIGMOID_H

@@ -3,7 +3,7 @@
 #include <sstream>
 #include <stdexcept>
 
-namespace cnncpp {
+namespace nf {
 
 Matrix::Matrix(size_t x_dim, size_t y_dim)
     : shape(x_dim, y_dim), mIsHostAllocated(false), mDataHost(nullptr) {}
@@ -68,4 +68,4 @@ void Matrix::allocateMemoryIfNotAllocated(Shape shape) {
   }
 }
 
-}  // namespace cnncpp
+}  // namespace nf

@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-namespace cnncpp {
+namespace nf {
 
 Sigmoid::Sigmoid(std::string name) { mName = name; }
 
@@ -26,4 +26,4 @@ void Sigmoid::backward(const Matrix& output_gradient) {
   }
 }
 
-}  // namespace cnncpp
+}  // namespace nf

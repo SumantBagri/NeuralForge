@@ -1,6 +1,6 @@
 #include "core/layers/Relu.h"
 
-namespace cnncpp {
+namespace nf {
 
 Relu::Relu(std::string name) { mName = name; }
 
@@ -24,4 +24,4 @@ void Relu::backward(const Matrix& output_gradient) {
   }
 }
 
-}  // namespace cnncpp
+}  // namespace nf

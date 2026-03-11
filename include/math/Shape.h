@@ -3,7 +3,7 @@
 
 #include <cstddef>
 
-namespace cnncpp {
+namespace nf {
 
 struct Shape {
   size_t x, y;
@@ -11,6 +11,6 @@ struct Shape {
   Shape(size_t x = 1, size_t y = 1) : x(x), y(y) {}
 };
 
-}  // namespace cnncpp
+}  // namespace nf
 
 #endif  // SHAPE_H

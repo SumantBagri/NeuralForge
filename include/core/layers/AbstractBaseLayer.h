@@ -5,7 +5,7 @@
 
 #include <string>
 
-namespace cnncpp {
+namespace nf {
 
 class AbstractBaseLayer {
  public:
@@ -25,6 +25,6 @@ class AbstractBaseLayer {
   std::string mName;
 };
 
-}  // namespace cnncpp
+}  // namespace nf
 
 #endif  // ABSTRACT_BASE_LAYER_H
