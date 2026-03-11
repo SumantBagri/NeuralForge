@@ -4,7 +4,6 @@
 #include <cstring>
 #include <memory>
 #include <stdexcept>
-#include <vector>
 
 #include "structures/DataType.hpp"
 #include "structures/Device.hpp"
